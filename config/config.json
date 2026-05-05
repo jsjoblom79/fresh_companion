@@ -1,0 +1,10 @@
+{
+  "app_name": "Fresh Companion",
+  "version": "2026.05.05",
+  "database": {
+    "host": "",
+    "port": 1200,
+    "enabled": false,
+    "connnection_string": "sqlite:///../../fresh_companion.db"
+  }
+}
