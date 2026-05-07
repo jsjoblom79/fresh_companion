@@ -5,6 +5,6 @@
     "host": "",
     "port": 1200,
     "enabled": false,
-    "connnection_string": "sqlite:///../../fresh_companion.db"
+    "connection_string": "sqlite:///../../fresh_companion.db"
   }
 }

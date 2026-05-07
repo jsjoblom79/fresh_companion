@@ -2,9 +2,9 @@ import json
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from data.data_models import Tasks, Notes, TimeTracking
-from fresh_companion_repo import FreshCompanionRepo
+from data.fresh_companion_repo import FreshCompanionRepo
 
-with open('../config/config.json', 'r') as file:
+with open('config/config.json', 'r') as file:
     config = json.load(file)
 
 
