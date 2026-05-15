@@ -1,11 +1,11 @@
 import json
-
+from webview import window
 import webview
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from data.data_models import Tasks, Notes, TimeTracking, Base
 from data.fresh_companion_repo import FreshCompanionRepo
-
+from datetime import datetime
 
 
 
@@ -33,18 +33,21 @@ class DataApi:
             raise
 
 
-        #self.repo = FreshCompanionRepo(self.db)
+        self.repo = FreshCompanionRepo(self.db)
 
     def add_task(self, task):
         try:
-            return self.repo.add(task)
+            new_task = Tasks(**task)
+            new_task.followup_date = datetime.fromisoformat(new_task.followup_date.replace('Z', '+00:00'))
+            saved_task = self.repo.add(new_task)
+            return saved_task.to_dict()
         except Exception as e:
             print(f"Failed to add task: {e}")
             raise
 
     def get_task(self, task_id):
         try:
-            task = self.repo.get_by_id(task_id)
+            task = self.repo.get_by_id(Tasks,task_id)
             if not task:
                 print(f"Task {task_id} not found")
                 return None
@@ -54,7 +57,24 @@ class DataApi:
             raise
 
     def get_all_tasks(self):
-        return self.db.query(Tasks).all()
+        tasks = self.db.query(Tasks).filter(Tasks.is_completed == False).all()
+        return [{
+            "id": task.id,
+            "title": task.title,
+            "description": task.description,
+        } for task in tasks]
 
-    def close_app(self):
-        webview.windows[0].destroy()
+    def delete_task(self, task_id):
+        task = self.get_task(task_id)
+        self.repo.delete(task)
+
+    def mark_complete(self, task_id):
+        self.repo.complete_task(self.get_task(task_id))
+
+
+
+    def get_total_task_count(self):
+        tasks = len(self.db.query(Tasks).all())
+        completed = len(self.db.query(Tasks).filter(Tasks.is_completed == True).all())
+        return {"count": tasks, "completed": completed}
+

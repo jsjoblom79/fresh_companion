@@ -93,7 +93,7 @@
     display: flex;
     justify-content: space-between;
     margin: 8px 0;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .stat-label {
@@ -125,6 +125,9 @@
     margin-bottom: 12px;
   }
 
+  .form-group input {
+  background-color: rgba(48,48,46,1);
+}
   label {
     display: block;
     margin-bottom: 4px;
@@ -244,6 +247,9 @@
     color: #55FF55;
   }
 
+  table {
+  width: 100%;
+}
   @media (max-width: 700px) {
     .dashboard-grid {
       grid-template-columns: 1fr;

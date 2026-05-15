@@ -8,19 +8,24 @@
     <title>Fresh Companion</title>
 </head>
 <body>
-    <div class="container">
+    <div class="vis-container">
         <div class="header">
             <h1>DATA MANAGEMENT</h1>
             <div class="header-subtitle">COPYRIGHT (C) 2026 RETRO DESIGN SYSTEMS.</div>
         </div>
-        <div class="button-group">
-            <button onclick="window.pywebview.api.close_app()">
-            EXIT</button>
-        </div>
+
 
         <div class="dashboard-grid">
             <div class="dashboard-box">
                 <h2>SYSTEM INFO</h2>
+                <div class="stat-row">
+                    <span class="stat-label">Total Tasks:</span>
+                    <span id="total-task-count" class="stat-value"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Completed Tasks:</span>
+                    <span id="total-completed-tasks" class="stat-value"></span>
+                </div>
             </div>
             <div class="dashboard-box">
                 <h2>FOLLOW UP</h2>
@@ -28,17 +33,32 @@
         </div>
         <div class="form-section">
             <h3>TASK ENTRY</h3>
+            <div class="form-group">
+                <label for="task-title">title</label>
+                <input type="text" id="task-title" placeholder="Task Title">
+            </div>
+            <div class="form-group">
+                <label for="task-description">Description</label>
+                <input type="text" id="task-description" placeholder="Describe the task" />
+            </div>
+
+            <button type="submit" onclick="add_task()">Add</button>
+
         </div>
         <div class="form-section">
             <h3>ALL TASKS</h3>
-            <div id="all-tasks">
+            <table id="all-tasks">
 
-            </div>
+            </table>
         </div>
         <div class="status-bar">
             <span></span>
             <span class="status-time">1.0.0</span>
-            <span></span>
+            <span>
+                <div class="button-group">
+                    <button onclick="window.pywebview.api.close_app()">EXIT</button>
+                </div>
+            </span>
         </div>
     </div>
 <div class="scanlines"></div>

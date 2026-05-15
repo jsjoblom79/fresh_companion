@@ -18,12 +18,20 @@ class Tasks(Base):
     title: Mapped[str] = mapped_column(Text, nullable=False)
     create_date: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
     description: Mapped[Optional[str]] = mapped_column(Text)
-    followup_date: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
-    last_followup: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
+    followup_date: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
+    last_followup: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
     is_completed: Mapped[Optional[int]] = mapped_column(Integer)
 
     notes: Mapped[list['Notes']] = relationship('Notes', back_populates='task')
     time_tracking: Mapped[list['TimeTracking']] = relationship('TimeTracking', back_populates='task')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+
+        }
 
 
 class Notes(Base):
